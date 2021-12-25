@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<script src="~/scripts/jquery.js"></script>
+<h2>Simple Asp.Net Web API</h2>
+
+<input type="button" value="Get All Employees" id="btn1"/>
+<br/>
+<input type="button" value="Get Employee By ID" id="btn3" />
+<input type="text" placeholder="Enter Employee ID" id="txt"/>
+<br />
+<input type="button" value="Clear" id="btn2" />
+<br/>
+
+<div id="ShowData">
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#btn3").click(function () {
+            var id = $("#txt").val();
+            $.getJSON('/api/EmployeesData/' + id, function (responseData) {
+                var item = "<h2>" + responseData + "</h2>";
+                $(item).appendTo("#ShowData");
+            });
+        });
+    });
+    $(document).ready(function () {
+        $("#btn2").click(function () {
+            $("#ShowData").empty();
+        });
+        $("#btn1").click(function () {
+            $.getJSON('/api/EmployeesData', function (responseData) {
+                $.each(responseData, function (key, val) {
+                    var item = "<h2>" + val + "</h2>";
+                    $(item).appendTo("#ShowData");
+                });
+            });
+        });
+    });
+</script>
